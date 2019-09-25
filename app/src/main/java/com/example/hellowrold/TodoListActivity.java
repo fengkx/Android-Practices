@@ -54,15 +54,35 @@ public class TodoListActivity extends AppCompatActivity {
             resourceId = resource;
         }
 
+        private class ViewHolder {
+            TextView todoText;
+            Button completeBtn;
+            View view;
+
+            public ViewHolder(View view) {
+                this.view = view;
+                this.todoText = view.findViewById(R.id.todoItemText);
+                this.completeBtn = view.findViewById(R.id.todoItemBtn);
+            }
+        }
+
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            ViewHolder viewHolder;
+            View view;
             final TodoItem item = getItem(position);
-            View view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-            // false 表示只让我们在父布局中声明的layout属性生效，但不会为这个View 添加父布局
-            TextView todoText = view.findViewById(R.id.todoItemText);
-            Button completeBtn = view.findViewById(R.id.todoItemBtn);
-            completeBtn.setOnClickListener(new View.OnClickListener() {
+            if (convertView == null) {
+                view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+                // false 表示只让我们在父布局中声明的layout属性生效，但不会为这个View 添加父布局
+                viewHolder = new ViewHolder(view);
+                view.setTag(viewHolder);
+            } else {
+                view = convertView;
+                viewHolder = (ViewHolder) view.getTag();
+
+            }
+            viewHolder.completeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     todoList.remove(item);
@@ -70,9 +90,10 @@ public class TodoListActivity extends AppCompatActivity {
                 }
             });
 
-            todoText.setText(item.getTodo());
-
+            viewHolder.todoText.setText(item.getTodo());
+            view.setTag(viewHolder);
             return view;
+
         }
     }
 
