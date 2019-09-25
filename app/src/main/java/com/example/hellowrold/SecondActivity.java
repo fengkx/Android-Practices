@@ -30,5 +30,23 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button recyclerTestBtn = findViewById(R.id.recyclerListTestBtn);
+        recyclerTestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SecondActivity.this, RecyclerViewTestActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button todoRecyclerListBtn = findViewById(R.id.todoRecyclerListBtn);
+        todoRecyclerListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SecondActivity.this, RecyclerViewTodoListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
